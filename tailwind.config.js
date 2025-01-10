@@ -10,7 +10,7 @@ export default {
         },
       },
       animation: {
-        arrow: "arrow 0.9ws ease-in-out infinite",
+        arrow: "arrow 0.9s ease-in-out infinite",
       },
     },
   },

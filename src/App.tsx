@@ -8,24 +8,18 @@ const cards = [
     description: ["courses you're powering", "through right now."],
     count: "23",
     key: 1,
-    color: "#F9EBEC",
-    textColor: "#C33241",
   },
   {
     title: ["Upcoming", "Courses"],
     description: ["exciting new courses", "waiting to boost your skills."],
     count: "05",
     key: 2,
-    color: "#EBF9F1",
-    textColor: "#32C37A",
   },
   {
     title: ["Ongoing", "Courses"],
     description: ["currently happening—don't", "miss out on the action!"],
     count: "10",
     key: 3,
-    color: "#EBF3F9",
-    textColor: "#3283C3",
   },
 ];
 
@@ -39,8 +33,17 @@ export default function App() {
   };
 
   return (
-    <div className="mx-auto p-8 px-64">
-      {/* ...existing code... */}
+    <div className="mx-auto p-8 ">
+      <div className="mb-8 pl-5">
+        <h2 className="text-gray-800 text-2xl mb-4">
+          Explore our classes and master trending skills!
+        </h2>
+        <h1 className="text-4xl font-bold">
+          Dive Into{" "}
+          <span className="text-emerald-500">What&apos;s Hot Right Now!</span>
+          🔥
+        </h1>
+      </div>
       {cards.map((card) => (
         <AnimatedCard
           card={card}
