@@ -28,8 +28,10 @@ export default function App() {
   const [previous, setPrevious] = useState(0);
 
   const handleCardChange = (newKey: number) => {
-    setPrevious(current);
-    setCurrent(newKey);
+    setCurrent((prev) => {
+      setPrevious(prev);
+      return newKey;
+    });
   };
 
   return (

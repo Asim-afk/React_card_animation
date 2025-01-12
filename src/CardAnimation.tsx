@@ -36,8 +36,8 @@ const AnimatedCard = ({
       if (!isInit && card.key !== current && card.key !== previous) {
         return;
       }
-
       if (card.key === current) {
+        console.log("im current", card.key);
         gsap.to(container, {
           flex: 1,
           width: 592,
@@ -94,6 +94,9 @@ const AnimatedCard = ({
             ease: "power2.inOut",
           });
       } else if (isInit ? true : card.key === previous) {
+        console.log("im prev", card.key);
+        console.trace(card.key);
+
         gsap.to(container, {
           flex: 1,
           width: 280,
@@ -149,7 +152,6 @@ const AnimatedCard = ({
 
   const handleClick = () => {
     if (current === card.key) return;
-    cardClick(false);
     setCurrent(card.key);
   };
 
@@ -160,7 +162,7 @@ const AnimatedCard = ({
     } else {
       cardClick(false);
     }
-  }, [cardClick, current]);
+  }, [cardClick, current, previous]);
 
   return (
     <div
@@ -213,10 +215,14 @@ const AnimatedCard = ({
           <div ref={textRef}>
             <div className="w-[250px]">
               {card.title.map((title) => (
-                <h3 className="text-[32px] font-[700] ">{title}</h3>
+                <h3 key={title} className="text-[32px] font-[700] ">
+                  {title}
+                </h3>
               ))}
               {card.description.map((desc) => (
-                <p className="font-[400] text-[18px]">{desc}</p>
+                <p key={desc} className="font-[400] text-[18px]">
+                  {desc}
+                </p>
               ))}
             </div>
           </div>
