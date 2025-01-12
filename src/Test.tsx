@@ -33,11 +33,22 @@ const AnimatedCard = ({
       const overlay = overlayRef.current;
       const image = imageRef.current;
       const viewAll = viewAllRef.current;
+
+      // Clear any existing animations first
+      gsap.killTweensOf([container, text, overlay, image, viewAll]);
+
+      // Skip animation if not initial and card is neither current nor previous
       if (!isInit && card.key !== current && card.key !== previous) {
         return;
       }
 
+      // Skip animation if trying to click the currently active card
+      if (!isInit && card.key === current && card.key === previous) {
+        return;
+      }
+
       if (card.key === current) {
+        // Expand animation
         gsap.to(container, {
           flex: 1,
           width: 592,
@@ -45,6 +56,7 @@ const AnimatedCard = ({
           duration: 0.8,
           ease: "power3.inOut",
         });
+
         gsap.fromTo(
           image,
           {
@@ -58,29 +70,30 @@ const AnimatedCard = ({
             ease: "power3.inOut",
           }
         );
+
         gsap.to(overlay, {
           clipPath: "circle(0% at bottom left)",
           duration: 0.8,
           ease: "power3.inOut",
         });
+
         gsap.to(viewAll, {
           opacity: 1,
           duration: 0.8,
           ease: "power3.inOut",
         });
-        gsap
-          .timeline()
-          .to(text, {
-            rotation: -95,
-            y: -160,
-            x: -90,
-            transformOrigin: "left bottom",
-            duration: 0.3,
-            ease: "power2.inOut",
-          })
+
+        const tl = gsap.timeline();
+        tl.to(text, {
+          rotation: -95,
+          y: -160,
+          x: -90,
+          transformOrigin: "left bottom",
+          duration: 0.3,
+          ease: "power2.inOut",
+        })
           .to(text, {
             rotation: 5,
-            transformOrigin: "left bottom",
             y: 0,
             x: 0,
             duration: 0.6,
@@ -88,12 +101,11 @@ const AnimatedCard = ({
           })
           .to(text, {
             rotation: 0,
-            y: 0,
-            x: 0,
             duration: 0.3,
             ease: "power2.inOut",
           });
-      } else if (isInit ? true : card.key === previous) {
+      } else if (isInit || card.key === previous) {
+        // Collapse animation
         gsap.to(container, {
           flex: 1,
           width: 280,
@@ -101,35 +113,36 @@ const AnimatedCard = ({
           duration: 0.8,
           ease: "power3.inOut",
         });
+
         gsap.to(image, {
           x: previous > current ? "-100%" : "100%",
           opacity: 0,
           duration: 0.8,
           ease: "power3.inOut",
         });
+
         gsap.to(viewAll, {
           opacity: 0,
           duration: 0.8,
           ease: "power3.inOut",
         });
+
         gsap.to(overlay, {
           clipPath: "circle(200% at bottom left)",
           duration: 0.8,
           ease: "power3.inOut",
         });
-        gsap
-          .timeline()
-          .to(text, {
-            rotation: 5,
-            transformOrigin: "left bottom",
-            y: 0,
-            x: 0,
-            duration: 0.3,
-            ease: "power2.inOut",
-          })
+
+        const tl = gsap.timeline();
+        tl.to(text, {
+          rotation: 5,
+          y: 0,
+          x: 0,
+          duration: 0.3,
+          ease: "power2.inOut",
+        })
           .to(text, {
             rotation: -95,
-            transformOrigin: "left bottom",
             y: -160,
             x: -90,
             duration: 0.6,
@@ -137,8 +150,6 @@ const AnimatedCard = ({
           })
           .to(text, {
             rotation: -90,
-            y: -160,
-            x: -90,
             duration: 0.3,
             ease: "power2.inOut",
           });
@@ -146,9 +157,8 @@ const AnimatedCard = ({
     },
     [card, current, previous]
   );
-
   const handleClick = () => {
-    if (current === card.key) return;
+    if (current === card.key || current === previous) return;
     cardClick(false);
     setCurrent(card.key);
   };
