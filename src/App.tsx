@@ -25,7 +25,7 @@ const cards = [
 
 export default function App() {
   const [current, setCurrent] = useState(1);
-  const [previous, setPrevious] = useState(1);
+  const [previous, setPrevious] = useState(0);
 
   const handleCardChange = (newKey: number) => {
     setPrevious(current);
