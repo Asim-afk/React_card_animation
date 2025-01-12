@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import AnimatedCard from "./Test";
+import AnimatedCard from "./CardAnimation";
 
 const cards = [
   {

@@ -34,21 +34,17 @@ const AnimatedCard = ({
       const image = imageRef.current;
       const viewAll = viewAllRef.current;
 
-      // Clear any existing animations first
       gsap.killTweensOf([container, text, overlay, image, viewAll]);
 
-      // Skip animation if not initial and card is neither current nor previous
       if (!isInit && card.key !== current && card.key !== previous) {
         return;
       }
 
-      // Skip animation if trying to click the currently active card
       if (!isInit && card.key === current && card.key === previous) {
         return;
       }
 
       if (card.key === current) {
-        // Expand animation
         gsap.to(container, {
           flex: 1,
           width: 592,
@@ -105,7 +101,6 @@ const AnimatedCard = ({
             ease: "power2.inOut",
           });
       } else if (isInit || card.key === previous) {
-        // Collapse animation
         gsap.to(container, {
           flex: 1,
           width: 280,
